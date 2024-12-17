@@ -1,0 +1,76 @@
+ر<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" id="city-input" placeholder="Enter city name" spellcheck="false">
+            <button id="search-btn"><img src="images/search.png" alt="search"></button>
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" alt="Weather icon" class="weather-icon">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">New York</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png" alt="Humidity icon">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="Wind icon">
+                    <div>
+                        <p class="wind">15 km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const apikey = "0153281614c5c0163b69ba9f6ae438fb";
+
+        async function checkWeather(city) {
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=${apikey}`;
+            try {
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error("City not found");
+                }
+
+                const data = await response.json();
+
+                // Update UI with weather data
+                document.querySelector(".temp").textContent = `${data.main.temp}°C`;
+                document.querySelector(".city").textContent = data.name;
+                document.querySelector(".humidity").textContent = `${data.main.humidity}%`;
+                document.querySelector(".wind").textContent = `${data.wind.speed} km/h`;
+                document.querySelector(".weather-icon").src = `images/${data.weather[0].main.toLowerCase()}.png`;
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Event listeners
+        document.getElementById("search-btn").addEventListener("click", () => {
+            const city = document.getElementById("city-input").value.trim();
+            if (city) {
+                checkWeather(city);
+            } else {
+                alert("Please enter a city name.");
+            }
+        });
+
+        // Default weather data for Bangalore
+        checkWeather("Bangalore");
+    </script>
+</body>
+</html>
