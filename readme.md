@@ -1,6 +1,8 @@
 
 # Climate System Project
 <img src="https://github.com/user-attachments/assets/49019441-bffb-4078-b192-fa9ef342c74b">
+
+
 This repository contains the code and resources for the Climate System project. The project aims to provide accurate and real-time climate data, weather forecasts, and climate analytics to help users understand and monitor climate patterns.
 
 
